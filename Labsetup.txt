@@ -1,0 +1,8 @@
+Lab Setup:
+
+
+1.node js
+
+2.vscode
+
+3.web browser -chrome
