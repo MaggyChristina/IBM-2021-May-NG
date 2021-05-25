@@ -1,0 +1,106 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./build/index.js":
+/*!************************!*\
+  !*** ./build/index.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/user.service */ \"./build/services/user.service.js\");\n\r\nfunction main() {\r\n    //\r\n    let userService = new _services_user_service__WEBPACK_IMPORTED_MODULE_0__.UserService();\r\n    console.log(userService.findAll());\r\n}\r\nmain();\r\n\n\n//# sourceURL=webpack://tsapps/./build/index.js?");
+
+/***/ }),
+
+/***/ "./build/mockdata/users.js":
+/*!*********************************!*\
+  !*** ./build/mockdata/users.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"USERS\": () => (/* binding */ USERS)\n/* harmony export */ });\nconst USERS = [\r\n    {\r\n        id: 1,\r\n        name: \"Leanne Graham\",\r\n        username: \"Bret\",\r\n        email: \"Sincere@april.biz\",\r\n        address: {\r\n            street: \"Kulas Light\",\r\n            suite: \"Apt. 556\",\r\n            city: \"Gwenborough\",\r\n            zipcode: \"92998-3874\",\r\n            geo: {\r\n                lat: \"-37.3159\",\r\n                lng: \"81.1496\"\r\n            }\r\n        },\r\n        phone: \"1-770-736-8031 x56442\",\r\n        website: \"hildegard.org\",\r\n        company: {\r\n            name: \"Romaguera-Crona\",\r\n            catchPhrase: \"Multi-layered client-server neural-net\",\r\n            bs: \"harness real-time e-markets\"\r\n        }\r\n    },\r\n    {\r\n        id: 2,\r\n        name: \"Ervin Howell\",\r\n        username: \"Antonette\",\r\n        email: \"Shanna@melissa.tv\",\r\n        address: {\r\n            street: \"Victor Plains\",\r\n            suite: \"Suite 879\",\r\n            city: \"Wisokyburgh\",\r\n            zipcode: \"90566-7771\",\r\n            geo: {\r\n                lat: \"-43.9509\",\r\n                lng: \"-34.4618\"\r\n            }\r\n        },\r\n        phone: \"010-692-6593 x09125\",\r\n        website: \"anastasia.net\",\r\n        company: {\r\n            name: \"Deckow-Crist\",\r\n            catchPhrase: \"Proactive didactic contingency\",\r\n            bs: \"synergize scalable supply-chains\"\r\n        }\r\n    },\r\n    {\r\n        id: 3,\r\n        name: \"Clementine Bauch\",\r\n        username: \"Samantha\",\r\n        email: \"Nathan@yesenia.net\",\r\n        address: {\r\n            street: \"Douglas Extension\",\r\n            suite: \"Suite 847\",\r\n            city: \"McKenziehaven\",\r\n            zipcode: \"59590-4157\",\r\n            geo: {\r\n                lat: \"-68.6102\",\r\n                lng: \"-47.0653\"\r\n            }\r\n        },\r\n        phone: \"1-463-123-4447\",\r\n        website: \"ramiro.info\",\r\n        company: {\r\n            name: \"Romaguera-Jacobson\",\r\n            catchPhrase: \"Face to face bifurcated interface\",\r\n            bs: \"e-enable strategic applications\"\r\n        }\r\n    },\r\n    {\r\n        id: 4,\r\n        name: \"Patricia Lebsack\",\r\n        username: \"Karianne\",\r\n        email: \"Julianne.OConner@kory.org\",\r\n        address: {\r\n            street: \"Hoeger Mall\",\r\n            suite: \"Apt. 692\",\r\n            city: \"South Elvis\",\r\n            zipcode: \"53919-4257\",\r\n            geo: {\r\n                lat: \"29.4572\",\r\n                lng: \"-164.2990\"\r\n            }\r\n        },\r\n        phone: \"493-170-9623 x156\",\r\n        website: \"kale.biz\",\r\n        company: {\r\n            name: \"Robel-Corkery\",\r\n            catchPhrase: \"Multi-tiered zero tolerance productivity\",\r\n            bs: \"transition cutting-edge web services\"\r\n        }\r\n    },\r\n    {\r\n        id: 5,\r\n        name: \"Chelsey Dietrich\",\r\n        username: \"Kamren\",\r\n        email: \"Lucio_Hettinger@annie.ca\",\r\n        address: {\r\n            street: \"Skiles Walks\",\r\n            suite: \"Suite 351\",\r\n            city: \"Roscoeview\",\r\n            zipcode: \"33263\",\r\n            geo: {\r\n                lat: \"-31.8129\",\r\n                lng: \"62.5342\"\r\n            }\r\n        },\r\n        phone: \"(254)954-1289\",\r\n        website: \"demarco.info\",\r\n        company: {\r\n            name: \"Keebler LLC\",\r\n            catchPhrase: \"User-centric fault-tolerant solution\",\r\n            bs: \"revolutionize end-to-end systems\"\r\n        }\r\n    },\r\n    {\r\n        id: 6,\r\n        name: \"Mrs. Dennis Schulist\",\r\n        username: \"Leopoldo_Corkery\",\r\n        email: \"Karley_Dach@jasper.info\",\r\n        address: {\r\n            street: \"Norberto Crossing\",\r\n            suite: \"Apt. 950\",\r\n            city: \"South Christy\",\r\n            zipcode: \"23505-1337\",\r\n            geo: {\r\n                lat: \"-71.4197\",\r\n                lng: \"71.7478\"\r\n            }\r\n        },\r\n        phone: \"1-477-935-8478 x6430\",\r\n        website: \"ola.org\",\r\n        company: {\r\n            name: \"Considine-Lockman\",\r\n            catchPhrase: \"Synchronised bottom-line interface\",\r\n            bs: \"e-enable innovative applications\"\r\n        }\r\n    },\r\n    {\r\n        id: 7,\r\n        name: \"Kurtis Weissnat\",\r\n        username: \"Elwyn.Skiles\",\r\n        email: \"Telly.Hoeger@billy.biz\",\r\n        address: {\r\n            street: \"Rex Trail\",\r\n            suite: \"Suite 280\",\r\n            city: \"Howemouth\",\r\n            zipcode: \"58804-1099\",\r\n            geo: {\r\n                lat: \"24.8918\",\r\n                lng: \"21.8984\"\r\n            }\r\n        },\r\n        phone: \"210.067.6132\",\r\n        website: \"elvis.io\",\r\n        company: {\r\n            name: \"Johns Group\",\r\n            catchPhrase: \"Configurable multimedia task-force\",\r\n            bs: \"generate enterprise e-tailers\"\r\n        }\r\n    },\r\n    {\r\n        id: 8,\r\n        name: \"Nicholas Runolfsdottir V\",\r\n        username: \"Maxime_Nienow\",\r\n        email: \"Sherwood@rosamond.me\",\r\n        address: {\r\n            street: \"Ellsworth Summit\",\r\n            suite: \"Suite 729\",\r\n            city: \"Aliyaview\",\r\n            zipcode: \"45169\",\r\n            geo: {\r\n                lat: \"-14.3990\",\r\n                lng: \"-120.7677\"\r\n            }\r\n        },\r\n        phone: \"586.493.6943 x140\",\r\n        website: \"jacynthe.com\",\r\n        company: {\r\n            name: \"Abernathy Group\",\r\n            catchPhrase: \"Implemented secondary concept\",\r\n            bs: \"e-enable extensible e-tailers\"\r\n        }\r\n    },\r\n    {\r\n        id: 9,\r\n        name: \"Glenna Reichert\",\r\n        username: \"Delphine\",\r\n        email: \"Chaim_McDermott@dana.io\",\r\n        address: {\r\n            street: \"Dayna Park\",\r\n            suite: \"Suite 449\",\r\n            city: \"Bartholomebury\",\r\n            zipcode: \"76495-3109\",\r\n            geo: {\r\n                lat: \"24.6463\",\r\n                lng: \"-168.8889\"\r\n            }\r\n        },\r\n        phone: \"(775)976-6794 x41206\",\r\n        website: \"conrad.com\",\r\n        company: {\r\n            name: \"Yost and Sons\",\r\n            catchPhrase: \"Switchable contextually-based project\",\r\n            bs: \"aggregate real-time technologies\"\r\n        }\r\n    },\r\n    {\r\n        id: 10,\r\n        name: \"Clementina DuBuque\",\r\n        username: \"Moriah.Stanton\",\r\n        email: \"Rey.Padberg@karina.biz\",\r\n        address: {\r\n            street: \"Kattie Turnpike\",\r\n            suite: \"Suite 198\",\r\n            city: \"Lebsackbury\",\r\n            zipcode: \"31428-2261\",\r\n            geo: {\r\n                lat: \"-38.2386\",\r\n                lng: \"57.2232\"\r\n            }\r\n        },\r\n        phone: \"024-648-3804\",\r\n        website: \"ambrose.net\",\r\n        company: {\r\n            name: \"Hoeger LLC\",\r\n            catchPhrase: \"Centralized empowering task-force\",\r\n            bs: \"target end-to-end models\"\r\n        }\r\n    }\r\n];\r\n\n\n//# sourceURL=webpack://tsapps/./build/mockdata/users.js?");
+
+/***/ }),
+
+/***/ "./build/services/user.service.js":
+/*!****************************************!*\
+  !*** ./build/services/user.service.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"UserService\": () => (/* binding */ UserService)\n/* harmony export */ });\n/* harmony import */ var _mockdata_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mockdata/users */ \"./build/mockdata/users.js\");\n//es 6 module to share code. -  class\r\n//export , export default\r\n\r\nclass UserService {\r\n    constructor() {\r\n    }\r\n    findAll() {\r\n        return _mockdata_users__WEBPACK_IMPORTED_MODULE_0__.USERS;\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://tsapps/./build/services/user.service.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./build/index.js");
+/******/ 	
+/******/ })()
+;

@@ -2,7 +2,11 @@
     "compilerOptions": {
         "watch": true,
         "outDir": "build",
-        "target": "ES6"
+        "target": "ES6",
+        "noEmitOnError": true,    
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "files": [
         "src/index.ts"
