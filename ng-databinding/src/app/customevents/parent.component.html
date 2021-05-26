@@ -1,0 +1,6 @@
+<div>
+  <h1>Parent Component : Child to Parent Communication</h1>
+  <h1>Child Component Data:{{childMessage}}</h1>
+  <hr/>
+  <app-child [name]="'Subramanina'" (onSendRequest)="onReadData($event)"></app-child>
+</div>

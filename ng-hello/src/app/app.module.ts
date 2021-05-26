@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-// create module
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { MainComponent } from './main/main.component';
+import { MenubarComponent } from './header/menubar.component';
 
 @NgModule({
-  //information to di /injector system :create objects and make it available for use
-  declarations: [AppComponent],
-  imports: [BrowserModule],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    MainComponent,
+    MenubarComponent,
+  ], // view objects - component,pipe,directives
+  imports: [BrowserModule], //all sub modules
   providers: [],
-  //Which is front controller /Home page /entry page
+  //which component is entry /main/rot
   bootstrap: [AppComponent],
 })
 export class AppModule {}
