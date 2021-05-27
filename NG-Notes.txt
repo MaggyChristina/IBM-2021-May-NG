@@ -1786,26 +1786,661 @@ export class SwitchcaseComponent implements OnInit {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+3.Attribute directive :
+
+ Adding extra behaviour to existing dom elements.
+
+<h1 style class hidden  id name >
+     |
+  built in attributes
+
+can i add custom attributes? yes
+
+<h1 myattribute="value" >
+
+eg:
+<a routerLink="child-a">
+       |
+  attribute directive
+
+<app-root> ----->Comonent
+*ngFor --->NgForDirective
+routerLink ->RouterLinkDirective
+
+
+<button (click)="listener">
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+				 DOM MANIPULATION
+..............................................................................................
+
+
+Access Object , change its values
+
+ h2------Object---->change its value
+
+Using js you change it.
+
+ var element = document.getElementByid('xxx')
 
 
 
+Ways of dom manipulation:
+
+1.via structural directive -*ngFor,*ngIf
+
+2.via $event object.
+
+3.Javascript way
+   access dom element directly like js inside angular via attribute directive.
+
+AttributeDirecive is object through which you can access native dom elements and do dom maniuplation.
+
+1.INSIDE Directive
+  using "ElementRef" -Object
+A wrapper around a native element inside of a View.
+
+this.element.nativeElement.style.backgroundColor = "yellow";
+
+How to use ElementRef object?
+  
+Angular is di framework, you have to grab any object inside another via constructors.
+
+    this.element.nativeElement.style.backgroundColor = 'yellow'
+
+How to add event listeners and events?
+  js way.
+
+////////////////////////////////////////////////////////////////////////////////////
+
+import { Directive, ElementRef, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+
+  constructor(private element: ElementRef) {
+    console.log('directive is applied')
+    console.log(this.element.nativeElement)
+    //setting back ground color
+    this.element.nativeElement.style.backgroundColor = 'yellow'
+  }
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    console.log('entering')
+    this.highLight('yellow')
+  }
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    console.log('leaving')
+    this.highLight(null)
+
+  }
+  private highLight(color: string) {
+    this.element.nativeElement.style.backgroundColor = color
+
+  }
+
+}
+
+inside component:
+<div>
+    <h1 appHighlight >Highlight Me!</h1>
+</div>
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+                                  Template Reference Variable
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Getting DOM Reference inside template itself -Template Reference variable.
+
+DOM Manipulation in angular patterns:
+
+Within comonent/directive code - inside ts code
+1.Via $event Object.
+2.Via Attribute Directive : ElementRef,@HostListener.
+3.Via structural directive
+
+inside template itself:
+
+4.Template Reference Variable : #
+ To access dom objects inside /across templates.
+
+DOM Manipulation in angular patterns:
+
+
+Within comonent/directive code - inside ts code
+1.Via $event Object.
+2.Via Attribute Directive : ElementRef,@HostListener.
+3.Via structural directive
+
+inside template itself:
+
+4.Template Reference Variable : #
+ To access dom objects inside /across templates.
+
+
+<div>
+    <h1 style="text-align: center;">Template Reference</h1>
+
+    <div>
+        <h1>Name : {{firstname}}</h1>
+        <input #name placeholder="Please Enter Your Name">
+
+        <button class="btn btn-success" (click)="setName(name.value)">Get Value From Template</button>
+    </div>
+</div>
+export class TemplatereferenceComponent implements OnInit {
+
+  color:string = 'red'
+  firstname:string ='Default'
+
+  public setName(name:string){
+     this.firstname = name;
+  }
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+                                     Pipes
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is pipe?
+ pipe object used for data formating.
+
+eg:
+ show uppercase
+ show money values - $,#,
+ show date fromates  - 1/10/2021 , feb 10 2021...
+ custom formates
+
+Angular provides lot of built in pipes, you can write your own pipes as well.
+....
+Syntax:
+  some data | nameof the pipe.
+
+
+CommonModule,FormsModule,XXXXModules---->Group into one---->
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+                                     Pipes
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is pipe?
+ pipe object used for data formating.
+
+eg:
+ show uppercase
+ show money values - $,#,
+ show date fromates  - 1/10/2021 , feb 10 2021...
+ custom formates
+
+
+Angular provides lot of built in pipes, you can write your own pipes as well.
+....
+Syntax:
+  some data | nameof the pipe.
+
+
+Builtin pipes:
+
+DatePipe: Formats a date value according to locale rules.
+
+UpperCasePipe: Transforms text to all upper case.
+
+LowerCasePipe: Transforms text to all lower case.
+
+CurrencyPipe: Transforms a number to a currency string, formatted according to locale rules.
+
+DecimalPipe: Transforms a number into a string with a decimal point, formatted according to locale rules.
+
+PercentPipe: Transforms a number to a percentage string, formatted according to locale rules.
+
+asyncPipe : to bind list of values async
 
 
 
+Date Formating:
+
+today:any = new Date();
+
+<h3>Today {{today | date }}</h3>
+
+What if i want to customize date according our need?
+
+ dd/mm/yyy - format
+
+Pipes can take input
+
+ {{expression | pipe:input}}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+UpperCasePipe
+
+{{ value_expression | uppercase }}
+
+<div>
+    <h1 style="text-align: center;">Pipes</h1>
+    <h2>Date Pipe</h2>
+    <h2>Today {{today | date}}</h2>
+    <h2>Today {{today | date:'dd/MM/YY'}}</h2>
+    <h2>Today {{today | date:'medium'}}</h2>
+    <h1>String Pipe</h1>
+    <h2>Name {{name | uppercase}}</h2>    
+    <h2>Name {{name | lowercase}}</h2>
+    <h2>Name {{name | titlecase}}</h2>
+    <h1>Currency Pipe</h1>
+    <p>A: {{a | currency}}</p>
+
+    <p>A: {{a | currency:'INR'}}</p>
+
+    <!--output 'CA$0.26'-->
+    <p>A: {{a | currency:'CAD'}}</p>
+
+    <!--output 'CAD0.26'-->
+    <p>A: {{a | currency:'CAD':'code'}}</p>
+
+    <!--output 'CA$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2'}}</p>
+
+    <!--output '$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol-narrow':'4.2-2'}}</p>
+
+    <!--output '0 001,35 CA$'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2':'fr'}}</p>
+
+    <!--output 'CLP1' because CLP has no cents-->
+    <p>B: {{b | currency:'CLP'}}</p>
+
+</div>
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Custom Pipes
+............
+
+Step 1:
+
+declare pipe class
+import { Pipe, PipeTransform } from "@angular/core";
 
 
 
+@Pipe({
+    name: 'decimalFraction'
+})
+export class DecimalFractionPipe implements PipeTransform {
+    transform(value: number, digit: number = 2) {
+        console.log('decimal fraction')
+        //10.789445454  => 10.79
+        return value.toFixed(digit)
+    }
+}
+
+@NgModule({
+  declarations : [DecimalFractionPipe],
+  imports : [BrowserModule ,FormsModule],
+  providers: [],
+  ///entry point
+  bootstrap: [AppComponent]
+
+})
+export class AppModule{}
+
+<h1>Custom Pipe</h1>
+     <p>Fraction Pipe Value :  {{100.8978999 | decimalFraction:1}}</p>
+
+
+Think : you have list of products , want to display products based on price - low -high
+high-low.
+/////////////////////////////////////////////////////////////////////////////////////////////
+                               Modularation 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Application Modularity:
+
+1.folders and files based modularity
+   into folders
+   into files  -es 6 moduarity.
+
+2.logical modularity
+
+3.lib based modularity
+
+
+2.logical modularity:
+
+  -This is angular modularity
+  -Object organization.
+
+Objects classified into two category
+
+ -container objects
+     which contains other objects
+    container objects are represented by modules decorated with @NgModule
+  Types of container
+     - main container - AppModule -  Application container
+     - sub containers  -Grouped modules - subModules decorated with @NgModule
+
+ -features objects
+   component,directives,pipes,utitlies,Services
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Scope: Encapsulation
+  Visibility of objects
+
+Types of scope
+-within module
+-across the app
+
+Submodules:
+
+ Angular provides lot of built in submodules
+
+BrowserModule
+FormsModule
+
+how to create custom submodule.
+
+Step 1:
+app/greeter
+
+greeter.module.ts
+
+import { NgModule } from "@angular/core";
+
+@NgModule({
+    declarations: [],
+    imports: [],
+    providers: []
+})
+export class GreeterModule { }
+
+app/app.module.ts
+
+import { GreeterModule } from './greeter/greeter.module';
+@NgModule({
+   imports: [
+    BrowserModule ,GreeterModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+Steps Creating component inside GreeterModule:
+
+C:\session\HrBlock\ng-modularity>ng g c greeter/hello  --module greeter   --inline-style true --skip-tests true --flat true
+CREATE src/app/greeter/hello.component.html (20 bytes)
+CREATE src/app/greeter/hello.component.ts (248 bytes)
+UPDATE src/app/greeter/greeter.module.ts (226 bytes)
+
+
+import { NgModule } from "@angular/core";
+import { HelloComponent } from './hello.component';
+
+@NgModule({
+    declarations: [
+        HelloComponent
+    ],
+    imports: [],
+    providers: []
+})
+export class GreeterModule { }
+
+
+Try to access inside app.component.html
+
+<div class="container">
+  <h1 style="text-align: center;">Modularity</h1>
+  <app-hello></app-hello>
+</div>
+
+Output
+
+src/app/app.component.html:3:3 - error NG8001: 'app-hello' is not a known element:
+1. If 'app-hello' is an Angular component, then verify that it is part of this module.
+2. If 'app-hello' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+3   <app-hello></app-hello>
+    ~~~~~~~~~~~
+
+  src/app/app.component.ts:5:16
+    5   templateUrl: './app.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AppComponent.
+
+
+app-hello is part of greeter module , we are refering outside that module.
+
+Note:
+
+ - any object defined within that module, will be visible with in that module only.
+   which is not visible outside that module inculding appmodule.
+
+
+How to refer outside?
+
+ We have to share it . via configuration : exports
+
+import { NgModule } from "@angular/core";
+import { HelloComponent } from './hello.component';
+
+@NgModule({
+    declarations: [
+        HelloComponent
+    ],
+    imports: [],
+    exports: [HelloComponent],
+    providers: []
+})
+export class GreeterModule { }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Via Cli:
+C:\session\HrBlock\ng-modularity>ng g module greeter --module=app
+CREATE src/app/greeter/greeter.module.ts (193 bytes)
+UPDATE src/app/app.module.ts (390 bytes)
+
+C:\session\HrBlock\ng-modularity>ng g c greeter/hello  --module greeter   --inline-style true --skip-tests true --flat true --export true
+CREATE src/app/greeter/hello.component.html (20 bytes)
+CREATE src/app/greeter/hello.component.ts (248 bytes)
+UPDATE src/app/greeter/greeter.module.ts (265 bytes)
+
+
+CommonModule:
+.............
+Exports all the basic Angular directives and pipes, such as NgIf, NgForOf, DecimalPipe, and so on. Re-exported by BrowserModule, which is included automatically in the root AppModule when you create a new app with the CLI new command.
+
+BrowserModule
+.............
+
+Exports required infrastructure for all Angular apps. Included by default in all Angular apps created with the CLI new command. Re-exports CommonModule and ApplicationModule, making their exports and providers available to all apps.
 
 
 
+BrowserModule vs CommonModule:
+
+BrowserModule is having all builtin directives(*ngIF...),Pipes(uppercase...) and extra browser
+functiality. It is required module to run angular apps.
+It has been injected inside appmodule, as per scope concept, BrowserModule will be not visible outside appmodule.
+
+What if i want to use builtin things, angular provides CommonModule is having all builtin directives(*ngIF...),Pipes(uppercase...)  except browser features.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+                                   Module Refactoring
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+what if application grows rapidly 
+
+ greeter
+ users
+ products
+
+we need to inject all modules inside app module..
+
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { GreeterModule } from './greeter/greeter.module';
+import { UsersModule } from './users/users.module';
+import { ProductsModule } from './products/products.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    GreeterModule,
+    UsersModule,
+    ProductsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+Injecting all domain modules into app.module is not good practice , we have to create
+module called  "shared Module" , that module you can inject to app module.
+
+
+Demo:
+
+Create folder
+
+app/domainmodules/app.domain.shared.module.ts
+
+import { NgModule } from "@angular/core";
+import { GreeterModule } from "../greeter/greeter.module";
+import { ProductsModule } from "../products/products.module";
+import { UsersModule } from "../users/users.module";
 
 
 
+@NgModule({
+    imports: [GreeterModule, UsersModule, ProductsModule]
+})
+export class AppDomainSharedModule {
+
+}
+
+app.module
+
+import { AppDomainSharedModule } from './domainmodules/app.domain.shared.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppDomainSharedModule
+    // GreeterModule,
+    // UsersModule,
+    // ProductsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+src/app/app.component.html:3:3 - error NG8001: 'app-hello' is not a known element:
+1. If 'app-hello' is an Angular component, then verify that it is part of this module.
+2. If 'app-hello' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+Soution: exports module itself
+
+@NgModule({
+    imports: [GreeterModule, UsersModule, ProductsModule],
+    exports: [GreeterModule, UsersModule, ProductsModule]
+})
+export class AppDomainSharedModule {
+
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+                             Global Sharing
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Some features need to shared across application.
+
+Features:
+
+1.pipes
+2.directives
+3.services
+4.commonModule
+5.FormsModule
+
+what if i want reuse theses features across application, we dont need to inject  every component.
+
+we can create shared module.
+
+
+shared.module.ts
+
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 
 
+@NgModule({
+    imports: [CommonModule, FormsModule],
+    exports: [CommonModule, FormsModule]
+})
+export class SharedModule { }
 
 
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared.module';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    // CommonModule,FormsModule
+    SharedModule
+  ],
+  exports: [
+    HelloComponent
+  ]
+})
+export class GreeterModule { }
+
+ 
+//Shared module
+
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HighlightDirective } from "./directives/highlight.directive";
+import { DecimalFractionPipe } from "./pipes/decimalfraction.pipe";
+
+
+@NgModule({
+    declarations: [DecimalFractionPipe, HighlightDirective],
+    imports: [CommonModule, FormsModule],
+    exports: [CommonModule, FormsModule, DecimalFractionPipe, HighlightDirective]
+})
+export class SharedModule { }
 
 
 
