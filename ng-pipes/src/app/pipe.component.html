@@ -1,0 +1,39 @@
+<h1>Today : {{today | date}}</h1>
+<h1>Today : {{today | date:'short'}}</h1>
+<h1>Today : {{today | date:'dd/MM/yy'}}</h1>
+<h1>String Pipe</h1>
+<h2>Name {{name | uppercase}}</h2>    
+<h2>Name {{name | lowercase}}</h2>
+<h2>Name {{name | titlecase}}</h2>
+
+<h1>Currency Pipe</h1>
+    <p>A: {{a | currency}}</p>
+
+    <p>A: {{a | currency:'INR'}}</p>
+
+    <!--output 'CA$0.26'-->
+    <p>A: {{a | currency:'CAD'}}</p>
+
+    <!--output 'CAD0.26'-->
+    <p>A: {{a | currency:'CAD':'code'}}</p>
+
+    <!--output 'CA$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2'}}</p>
+
+    <!--output '$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol-narrow':'4.2-2'}}</p>
+
+    <!--output '0 001,35 CA$'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2':'fr'}}</p>
+
+    <!--output 'CLP1' because CLP has no cents-->
+    <p>B: {{b | currency:'CLP'}}
+
+    </p>
+    <pre>
+        {{profile | json}}
+    </pre>
+
+    <h1>Custom Pipe</h1>
+    <h2>{{178.786 | decimalFraction}}</h2>
+<h2>{{178.786 | decimalFraction:3}}</h2>

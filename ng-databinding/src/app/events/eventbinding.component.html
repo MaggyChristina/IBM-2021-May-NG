@@ -1,0 +1,25 @@
+<h1>Event Binding </h1>
+<div>
+    <button (click)="onClick()">Click</button>
+</div>
+<div>
+    <h3>Sending Input to Listener</h3>
+    <button (click)="onUpdate('user')">Save</button>
+</div>
+<div>
+    <h3>Getting Event Object</h3>
+    <button (click)="getEvent($event)">EventObject</button>
+</div>
+<div>
+    <h3>Getting input from the User and send to method</h3>
+    <div>
+      <p>{{name}}</p>
+    </div>
+    <!-- <input (input)="onInput($event)" /> -->
+    <input (input)="name=$event.target.value"/>
+    <input [value]="name" (input)="name=$event.target.value"/>
+    <div>
+      <input [(ngModel)]="name">
+    </div>
+    <p>Foo{{foo}}</p>
+</div>

@@ -1,0 +1,2806 @@
+                                          Angular 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is angular
+
+Angular framework arch
+
+Angular Application
+
+Angular consists of objects.
+
+ 1.-we need class
+  class Employee{}
+ 2.-we need to create
+     new Employee()
+In Angular 
+  - we do only step 1 - declare class
+
+   -angular will do step 2 -create object .
+
+Objects collabrate each other
+   -has -a or is-a
+   
+
+   Step 1:
+     class Address{}
+     class Employee{
+           //has-a
+           constructor(private addr:Address){}
+     }
+     
+Step 2: new Employee(new Address()); // dependency injection
+
+ - we do only step 1
+  -angular will do step 2 -create object and links object -  automatic dependency injection
+  -ioc - inversion of control
+
+
+Angular core concepts
+
+Object types
+1.domain
+   employee,order,product,invoice,customer..
+   domains are created using arrays and literal objects
+
+2.infra objects
+  help to make app infra structure
+  modules,components,pipes,services,directives,meta objects(part of decorators)
+  infra objects are created by angualar declared as "classes" and decorated with decorators
+
+  @Component()
+  class Header{
+
+  }
+
+  @NgModule()
+  class LoginModule{}
+
+  @Injectable()
+  class LoginService{}
+
+
+Angular modularity:
+
+  -File based modularity - code sharing - es 6 modules - import,export,export default
+  -Logical Moduarity -Object Organization
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Angular Framework Projects:
+..........................
+
+ Angular is collection of many sub projects.
+
+                                       Angular Framework-@angular
+					       |
+        ------------------------------------------------------------------------------
+        |              |        |       |
+     Angular cli  Angular core  COMMON CDK .......................
+       /cli
+
+HR App
+  -Emplyee app
+  -Payroll app
+  -Tax app
+
+Angular uses a convention to organize projects - called namespaces.
+  namespaces are represented by folder and npm package convention
+
+   "@angular"
+
+subprojects
+    @angular/cli
+    @angular/common
+
+   @- npm private packages.
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Project 1:
+  @angular/cli
+
+npm install -g @angular/cli
+
+cli commands:
+..............
+ng help
+ng help
+
+Available Commands:
+
+  add Adds support for an external library to your project.
+
+  analytics Configures the gathering of Angular CLI usage metrics. See https://angular.io/cli/usage-analytics-gathering.
+
+  build (b) Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed from within a workspace directory.
+  deploy Invokes the deploy builder for a specified project or for the default project in the workspace.
+  config Retrieves or sets Angular configuration values in the angular.json file for the workspace.
+  doc (d) Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
+  e2e (e) Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+  extract-i18n (i18n-extract, xi18n) Extracts i18n messages from source code.
+  generate (g) Generates and/or modifies files based on a schematic.
+  help Lists available commands and their short descriptions.
+  lint (l) Runs linting tools on Angular app code in a given project folder.
+  new (n) Creates a new workspace and an initial Angular application.
+  run Runs an Architect target with an optional custom builder configuration defined in your project.
+  serve (s) Builds and serves your app, rebuilding on file changes.
+  test (t) Runs unit tests in a project.
+  update Updates your application and its dependencies. See https://update.angular.io/
+  version (v) Outputs Angular CLI version.
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+create a new Project
+-new (n) Creates a new workspace and an initial Angular application.
+
+ng new my-first-project
+cd my-first-project
+ng serve
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Exploring Project files and folders
+
+folders
+ -e2e
+    end to end testing information - e2e framework is protractor.
+ -node_modules
+    all angular libs @angular @somethiing
+
+ -src
+    Application code will go here
+
+files
+ package.json - project information like dep,scripts
+ 
+ts config -files
+  -ts.config - core configuration
+  -tsconfig.app.json - app specific compiler conf
+  -tsconfig.spec.json  -testing related compiler conf
+
+tslint.json 
+   config information for tslint tool.
+   static code analysis using tslint tool
+
+
+angular.json.
+  angular project automated by webpack,but we cant see any webpack.config.js file.
+ angular.json file is proxy file for webpack.
+
+ -app related configuration
+  
+karma.config.json
+    Unit testing configuration files
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+App folder structure
+
+ src
+  |
+  app
+    -will have basic application code
+  assets
+  env
+ index.html
+ main.ts - entry file for app
+ polyfills.ts - browser specific libs
+ styles.css - global css
+ test.ts - basic unit testing file
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+How to run basic angular apps?
+
+Via npm script
+ .npm start
+via cli cmd
+ ng serve
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Angular Work Flow:
+
+ main.ts ----->app.module.ts----app.component.ts
+
+ main.js ------app.module.js--->app.component.js
+
+
+
+src/main.ts
+
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+
+
+
+import { enableProdMode } from '@angular/core';
+            |                     |       |
+        function                  folder  subfolder
+
+It uses barrel export by default
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+app.module.ts
+
+ -in module is object, called container object - object contains other objects
+ angular apps can contains more container objects
+ 
+Every angular app must have one root container object -  appModule
+Every angular app may have sub containers objects - subModules
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+app.component.ts
+
+ Angular is mvc based framework.
+
+ MVC;
+  WE may have many controllers - product,item..... but you have to have one root controller
+ which dispatches/ routes to other controllers - front controller.
+
+
+                                               -other controllers
+Front end---------       Front Controller----->|
+                                              -other controllers
+
+
+
+                                               -other controllers
+Front end---------       AppComponent---->|
+                                               -other controllers
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Component:
+
+ -Component is object,UI Object.
+ -Comonent is core object without which no ui
+ -Component uses other objects-directives,services,pipes,so....
+
+At core,At very low level- 
+  Component is simple javascript function.
+  
+  function has logic to create "DOM ELEMENT/DOM MANIUPLATION"
+
+DOM: 
+   DOM is spec , defined by W3C to reprenent html elements inside javascript engine.
+
+
+HTML;
+  HTML is programming language -  dsl pl /declarative pl.
+
+HTML internal work flow:
+........................
+
+index.html -source code
+
+<html>
+<head></head>
+<title><title>
+<body>
+  <div>
+     <h1>Welcome</h1>
+  </div>
+</body>
+</html>
+
+feed into-------------------Browser
+
+loader---LOAD Code into browser
+ |
+   from file: or http:
+ |
+Parser : Parser is special compiler which converts source into lexcial tree(string tree)
+ |
+body
+  div
+     h1
+        Welcome 
+     h1
+  div
+body
+|
+ Complier-Compilation : Convert this into assembly
+|
+body -load xxx
+  div
+     h1
+        Welcome 
+     h1
+  div
+body
+
+|
+-------------------------Execution cycle------------------------------------
+HTML Execution engine : Request Os ,to allocate memory :Runtime
+
+-LinkedList
+
+body -Node
+  div -Node
+     h1 -Node
+        Welcome -Node
+     h1
+  div
+body
+| 
+ Linking the Nodes: Tree
+body  -Node
+  |
+  div -Node
+    |
+     h1 -Node
+      |
+        Welcome -Node
+        |
+     h1
+  div
+ |
+ |
+  Layout/Paint Engine: will convert nodes into pxs : final output
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Birth of Javascript:
+...................
+
+At Netscap decided to modifiy the linked list / tree via special program 
+
+netscap decided to create very light weight programming language to access the tree and modify the tree at runtime - js
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+HTML Elements types
+
+1.built in elements
+
+2.custom elements
+
+
+
+1.built in elements
+  are part of html language spec
+ h1,body,p,nav,div
+
+compiler design
+
+ source code
+                              compiler db -[div]
+                                 |
+  <div></div> ----- compile----compiler
+                                  |
+                      ------------------------
+                    if present             
+                      |
+                    execution
+                      |
+                     node
+                       |
+                     screen
+
+
+                                compiler db -[Subramanian]
+                                    |
+  <subramanian></subramaian> ----- compile----compiler
+                                  |
+                      ------------------------
+                    if present            if not present           
+                      |                        |
+                    execution              throw error - UnKnown Element
+                      |                                 |
+                     node                              Convert that element into PlanText   
+                       |                               |
+                     screen                           render
+
+
+
+2.IN 2007-2008 W3C Decided to introduce new html spec - html 5
+
+ -custom elements - how to add new elements
+ -custom attributes - how to add custom attribues on existing html specs
+
+Custom Types
+int,float =  class A{ int,float }
+
+how to teach browser to understand custom elements and attributes
+   -via Javascript
+
+
+                             compiler db -[Subramanian]
+                                    |
+ <subramanian></subramaian> ----- compile----compiler
+                                  |
+                      ------------------------
+                    if present            if not present           
+                      |                        |
+                    execution              feed into js 
+                      |                                 |
+                     node                              js will do something   
+                       |                               |
+                     screen                           render
+
+
+
+eg:
+
+class AppDrawer extends HTMLElement {...}
+
+window.customElements.define('app-drawer', AppDrawer);
+
+// Or use an anonymous class if you don't want a named constructor in current scope.
+window.customElements.define('app-drawer', class extends HTMLElement {...});
+
+
+
+  			              compiler db -[div,Subramanian]
+                                           |
+<subramanian></subramaian> --jsengine will add new defintion--- compile----compiler
+                                   |
+                      ------------------------
+                    if present            if not present           
+                      |                        |
+                    execution              throw error - UnKnown Element
+                      |                                 |
+                     node                              Convert that element into PlanText   
+                       |                               |
+                     screen                           render
+
+////////////////////////////////////////////////////////////////////////////////////////////
+Angular and Custom Elements:
+
+ Angular follows custom element spec in order to create apps.
+
+
+  Custom Element
+  <app-root></app-root>
+                  |
+                  ------------->|import { Component } from '@angular/core';
+
+				@Component({
+ 				 selector: 'app-root',
+  				templateUrl: './app.component.html',
+  				styleUrls: ['./app.component.css']
+				})
+				export class AppComponent {
+					  title = 'ng-helloworld';
+				}
+
+
+<app-root></app-root> ---------------function AppComponent(){ 
+                                           //dom code
+                                     }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Angular coding best pratices:
+...............................
+https://angular.io/guide/styleguide
+
+Custom elements Naming convention:Component selectors
+
+ <app-root> - recommended
+  
+ <approot>  - not recommended.
+
+Do use dashed-case or kebab-case for naming the element selectors of components.
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+How to create Component?
+
+Component consist of following things?
+
+1.template
+    collection of angular instructions
+
+Angular instructions:
+1.1. html elements - div,p,span
+1.2. data binding symbols -special instructions
+     *,[],(),#,directives <>,pipes(|)
+
+2.css
+   style sheet
+3.code
+   logic written in typescript 
+ variables,methods,interfaces
+
+Comonent has follwing things?
+
+ -dependency
+     -services
+
+Steps:
+
+1.declare component class and export it.
+
+export class AppComponent {
+
+}
+
+2.decorate component class. -@Component
+Decorator that marks a class as an Angular component and provides configuration metadata that determines how the component should be processed, instantiated, and used at runtime.
+
+3.meta Object {}
+@Component({})
+
+@Component({})
+export class AppComponent {
+
+}
+
+4.provide meta information
+ selector - custom element name
+ template - instructions
+ css - styles for component
+
+
+
+Types of templates:
+
+1.inline template
+   template is part of component itself , provided within string
+  template: `
+           <div>
+             <h1>HR Block Angular Apps welcomes you</h1>
+           </div>
+  `
+2.external template
+   template is outside component and provided via a separate .html file
+templateUrl: './app.component.html',
+
+import { Component } from "@angular/core";
+
+@Component({
+  selector: 'app-root',
+  templateUrl:'./app.component.html'
+})
+export class AppComponent {
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+How objects are created, who creates object and how objects are available? 
+  -IOC AND Dependency Injection.
+
+
+Angular never creates object of any class until you tell: Instrctions we need to give to 
+DI injector System.
+
+if you tell , then Ng Injector system creates object and links objects by looking constructor
+constructor(private var:type);
+
+
+Where we can specify this information? - di info
+
+Inside a module  - could be main or sub module.
+
+How to create Module Object? How to write di code?
+
+Steps:
+
+1.declare class
+export class AppModule { }
+
+2.decorate the class : @NgModule
+Decorator that marks a class as an NgModule and supplies configuration metadata.
+
+Decorator Meta data contains
+
+1.DI INFO : object creation information
+
+Infra objects can be classified into three category:
+......................................................
+
+1.1.view Objects
+ components,directives,pipes
+ declarations:[]
+  declarations: [AppComponent], // view objects - component,pipe,directives
+
+1.2.module objects-submodules
+  imports: [BrowserModule], //all sub modules
+
+1.3.services/providers
+  providers: []
+
+
+2.Root component entry.
+  bootstrap: [AppComponent]
+..............................................................................................
+
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { AppComponent } from "./app.component";
+
+@NgModule({
+  declarations: [AppComponent], // view objects - component,pipe,directives
+  imports: [BrowserModule], //all sub modules
+  providers: [],
+  //which component is entry /main/rot
+  bootstrap: [AppComponent]
+
+})
+export class AppModule { }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Component driven architecture:
+
+ Angular apps are collection of components.
+ Component represent "custom html element"
+ custom html element may compose other custom element and htmls elements- hi
+ you need to design app based on html hierachical design
+
+  <parent>         ----------------------------Appcomponent -selector
+      <child-1>  ------------------------------Child1Component
+              <sub-child></sub-child>
+      </child-1>
+      <child-2> -sibling
+		<sub-child>
+			...
+		</sub-child>
+      <child-2>
+  </parent>
+
+Steps to create component..(controller)
+
+1.create component class
+
+2.decorator using @Component
+
+3.add all meta properties
+
+4.export the class. 
+
+5.create instance inside module - declarations
+
+
+Every component will have 4 files  
+
+1.component file  -  app.component.ts
+2.component template file app.component.html
+3.component style file -  app.component.css
+4.compoent unit testing file - app.component.spec.ts
+
+Req:
+1.component file  -  app.component.ts
+
+style guide for file names
+
+domainname.component|service|directive|pipe.ts
+hero.component.ts
+hero.service.ts
+hero.directive.ts
+hero.pipe.ts
+
+hero.component.html
+hero.component.css
+
+folder style guide
+app folder must have only root files- app.component.ts,..app.module.ts
+
+domain model / utility model
+
+user
+products
+inventory
+pipes
+directives
+services
+headers
+footer
+menus
+navbar
+
+
+class Names:
+
+ 1.Noun
+ 2.should be meaningfull
+ 3.should have suffix component,service,directive,pipe
+
+ HeaderComponent
+ HeaderService
+ HeaderDirective
+ HeaderPipe
+
+
+Error: src/app/app.component.html:2:3 - error NG8001: 'app-header' is not a known element:
+1. If 'app-header' is an Angular component, then verify that it is part of this module.
+2. If 'app-header' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+2   <app-header></app-header>
+    ~~~~~~~~~~~~
+
+  src/app/app.component.ts:6:16
+    6   templateUrl: 'app.component.html'
+                     ~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AppComponent.
+
+How to visualize the angular apps in browser?
+
+Browser 
+  -elements tab -  shows html view
+  -augury
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&*******************************&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+file and artificates  creation automation:
+
+When ever you create any infra object templates, it requires additional aritificates
+
+create component.
+
+ component file
+   app.component.ts 
+ template file
+   app.component.html
+ style file
+    app.component.css
+
+ unit testing file
+    app.component.spec.ts
+
+Required files
+ component file
+   app.component.ts 
+ unit testing file
+    app.component.spec.ts
+
+greeter component creations
+
+1.create all files
+ greeter.component.ts 
+ greeter.component.html
+ greeter.component.css
+ greeter.component.spec.ts
+
+2.write code inside component
+
+3.depdenency injection inside modules
+
+4.refering component inside another file
+
+what if i want to keep all files inside folders.
+
+Coding Styles:
+
+ project must be organized into folders are based on domain,features,utilities
+
+app folder must have only appcomponent, and app module only
+
+
+component
+
+ng generate component <name> [options]
+ng g component <name> [options]
+ng g c <name> [options]
+
+
+options:
+--flat	
+Create the new files at the top level of the current project.
+
+&&&&&&&&&&&&&&&&&&&&&&*******************************&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+file and artificates  creation automation:
+
+When ever you create any infra object templates, it requires additional aritificates
+
+create component.
+
+ component file
+   app.component.ts 
+ template file
+   app.component.html
+ style file
+    app.component.css
+
+ unit testing file
+    app.component.spec.ts
+
+Required files
+ component file
+   app.component.ts 
+ unit testing file
+    app.component.spec.ts
+
+greeter component creations
+
+1.create all files
+ greeter.component.ts 
+ greeter.component.html
+ greeter.component.css
+ greeter.component.spec.ts
+
+2.write code inside component
+
+3.depdenency injection inside modules
+
+4.refering component inside another file
+
+what if i want to keep all files inside folders.
+
+Coding Styles:
+
+ project must be organized into folders are based on domain,features,utilities
+
+app folder must have only appcomponent, and app module only
+
+ src
+   |
+   app
+     |
+     greeter
+      greeter.component.ts 
+      greeter.component.html
+      greeter.component.css
+      greeter.component.spec.ts
+      index.ts
+
+Dont forget to add "Barrel export"
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+How to automate the above process?
+
+-create folder
+-create files
+-update component dependencies inside module
+
+ng generate
+Generates and/or modifies files based on a schematic.
+
+ng generate <schematic> [options]
+ng g <schematic> [options]
+
+
+component
+
+ng generate component <name> [options]
+ng g component <name> [options]
+ng g c <name> [options]
+
+
+options:
+--flat	
+Create the new files at the top level of the current project.
+
+boolean	false
+
+
+--inline-style	
+Include styles inline in the component.ts file. Only CSS styles can be included inline. By default, an external styles file is created and referenced in the component.ts file.
+
+Aliases: -s
+
+boolean	false
+
+
+--inline-template	
+Include template inline in the component.ts file. By default, an external template file is created and referenced in the component.ts file.
+
+Aliases: -t
+
+boolean	false
+
+--module	
+The declaring NgModule.
+
+Aliases: -m
+
+string
+
+--skip-tests	
+Do not create "spec.ts" test files for the new component.
+
+boolean	false
+ng g c hello --module app
+CREATE src/app/hello/hello.component.html (20 bytes)
+CREATE src/app/hello/hello.component.spec.ts (619 bytes)
+CREATE src/app/hello/hello.component.ts (271 bytes)
+CREATE src/app/hello/hello.component.css (0 bytes)
+UPDATE src/app/app.module.ts (517 bytes)
+
+
+ng g c util/logger --module app
+CREATE src/app/util/logger/logger.component.html (21 bytes)
+CREATE src/app/util/logger/logger.component.spec.ts (626 bytes)
+CREATE src/app/util/logger/logger.component.ts (275 bytes)
+CREATE src/app/util/logger/logger.component.css (0 bytes)
+UPDATE src/app/app.module.ts (670 bytes)
+
+ The above creates logger folder inside util folder and creates files
+
+ng g c util/hai    --module app  --flat true
+CREATE src/app/util/hai.component.html (18 bytes)
+CREATE src/app/util/hai.component.spec.ts (605 bytes)
+CREATE src/app/util/hai.component.ts (263 bytes)
+CREATE src/app/util/hai.component.css (0 bytes)
+UPDATE src/app/app.module.ts (742 bytes)
+
+--flat true:  dont create new folder use existing folder itself
+
+
+How to create comonent without external html,css,and how to skip spec files?
+ng g c product  --module app  --inline-template true  --inline-style true --skip-tests true
+CREATE src/app/product/product.component.ts (268 bytes)
+UPDATE src/app/app.module.ts (824 bytes)
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Eg:
+
+interpolation.component.ts
+
+import { Component } from '@angular/core';
+import { Address } from '../types/address.type';
+
+@Component({
+  selector: 'app-interpolation',
+  templateUrl: './interpolation.component.html',
+  styles: [
+  ]
+})
+export class InterpolationComponent {
+  //state 
+  message: string = "Greetings"
+  counter: number = 100;
+  isValid: boolean = true;
+  //object
+  address: Address = {
+    city: 'coimbatore',
+    state: 'Tamil Nadu',
+    zipcode: '642207'
+  }
+
+}
+interpolation.component.html
+
+<div>
+    <h1>InterPolation</h1>
+    <h1>Primitives</h1>
+    <h2>String {{message}}</h2>
+    <h2>Numbers {{counter}}</h2>
+    <h2>Boolean {{isValid}}</h2>
+    <h1>Object</h1>
+    <h3>{{address.city}} {{address.state}} {{address.zipcode}}</h3>
+    <h1>Expression</h1>
+    <h2>The Sum {{10 * 2}}</h2>
+</div>
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Property binding: [] - Attaching value to properties
+
+What is property?
+
+<img src="img">
+      |
+     property
+
+IN Angular we create two types of element
+
+1.HTML ELEMENT - img,div,h1
+2.Custom elements -  <app-greeter> <app-product>
+
+
+HTML ELEMENTS Can have property but those properties are called as "attributes"
+CUSTOM ELMEMENTS Can also have property which is called property
+
+attribute vs property
+
+1.attributes are html properties
+2.properties are custom element properties
+
+    attribute
+      |
+<img src="img">
+
+              property               
+               |
+<app-greeter message="hello" >
+
+
+ Attribute and Property binding both are used "[]" symbol.
+
+
+When i have to use [] on html attributes?
+    when ever you assign attribute value dynamically, you have to use [] if you bind value
+dynamically
+
+eg:
+
+
+When i have to use []  on custom elements?
+
+<app-greeter message="hello" >
+
+Component Interactions: How to pass data from one component to another component.
+
+Types
+
+1.Parent to child
+2.Child to Parent
+3.among components -siblings 
+
+1.Parent to child
+   parent comp can send data to child component via property binding.
+   
+*************************************************************************************
+How to pass data to custom elements?
+
+Component property Binding:
+
+ <app-greeter [message]="Hello" > </app-greeter>
+ 
+steps:
+
+1.pass data from the template
+
+<app-greeter [message]="Hello" > </app-greeter>
+ 
+What type of data you can pass?
+ -primitives -  including hardcoded values
+ -objects
+ -arrays
+
+Any values should be passed with in "" only
+
+Hard coded values:
+
+1.string;
+   "'Hello'"
+
+eg:
+
+app.component.html
+<app-greeter [message]="'Hello'" ></app-greeter>
+
+greeter.component.ts
+export class GreeterComponent{
+
+  @Input("message")
+  message:string
+}
+
+greeter.component.html
+<div>
+    <h1>Component Property Binding</h1>
+     <h2>Property Value {{message}}</h2>
+</div>
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Use case : how to pass data from appcomponent data to greeter component
+
+app.component.ts
+export class AppComponent {
+  title = 'ng-databinding';
+  msg:string = "Hello I am coming from App Component"
+}
+app.component.html
+<app-greeter [message]="msg" ></app-greeter>
+
+
+greeter.component.ts
+export class GreeterComponent{
+
+  @Input("message")
+  message:string
+}
+
+greeter.component.html
+<div>
+    <h1>Component Property Binding</h1>
+     <h2>Property Value {{message}}</h2>
+</div>
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Property Binding Use cases : @Input
+
+<app-greeter [message]="msg" ></app-greeter>
+
+@Input("message")
+message:string
+
+if prop name and instance variable is same, we need not give prop name
+
+<app-greeter [message]="msg" ></app-greeter>
+
+@Input()
+message:string
+
+
+if prop name and instance variable is differ, we need to give prop name
+
+<app-greeter [message]="msg" ></app-greeter>
+
+  @Input("message")
+  someMessage: string;
+
+Concept :
+.........
+
+Uni directional data flow model
+Component communcation patterns.
+
+In Component driven architectures, data is supplied from parent to child - uni directional 
+data flow model
+
+
+Uni directional data flow model:
+ Component  Responsiblity:
+
+   -state and logic
+   -UI Mark Up
+
+According component driven design;
+
+  - one component should have application state(customers,invoice order) and apis
+
+  - another component should have only ui to display application statement
+
+
+ One Component responsible for interacting with api,get data
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+C:\session\HrBlock\ng-databinding>ng g c employee/employeecontainer  --module app   --inline-style true --skip-tests true --flat true
+CREATE src/app/employee/employeecontainer.component.html (32 bytes)
+CREATE src/app/employee/employeecontainer.component.ts (284 bytes)
+UPDATE src/app/app.module.ts (751 bytes)
+
+C:\session\HrBlock\ng-databinding>ng g c employee/employeepresentation  --module app   --inline-style true --skip-tests true --flat true
+CREATE src/app/employee/employeepresentation.component.html (35 bytes)
+CREATE src/app/employee/employeepresentation.component.ts (293 bytes)
+UPDATE src/app/app.module.ts (877 bytes)
+
+/////////////////////////////////
+
+app.componnet.html
+<app-employeecontainer></app-employeecontainer>
+
+
+
+employeecontainer.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../types/employee.type';
+
+@Component({
+  selector: 'app-employeecontainer',
+  templateUrl: './employeecontainer.component.html',
+  styles: [
+  ]
+})
+export class EmployeecontainerComponent implements OnInit {
+
+  employee: Employee = {
+    id: 1,
+    name: 'Subramanian',
+    salary: 1000,
+    address: {
+      city: 'Coimbatore',
+      state: 'Tamil Nadu',
+      zipcode: '642207'
+    }
+  }
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+employeecontainer.component.html
+
+<app-employeepresentation [employee]="employee"> </app-employeepresentation>
+
+///////////////
+
+employeepresentation.component.ts
+
+import { Component, Input, OnInit } from '@angular/core';
+import { Employee } from '../types/employee.type';
+
+@Component({
+  selector: 'app-employeepresentation',
+  templateUrl: './employeepresentation.component.html',
+  styles: [
+  ]
+})
+export class EmployeepresentationComponent implements OnInit {
+
+  @Input()
+  employee: Employee;
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+employeepresentation.component.html
+<h1>Employee Details</h1>
+<h2>Id : {{employee.id}}</h2>
+<h2>Name : {{employee.name}}</h2>
+<h2>Salary : {{employee.salary}}</h2>
+<app-address [address]="employee.address"></app-address>
+
+///////////////////////////////////
+
+address.component.ts
+
+import { Component, Input, OnInit } from '@angular/core';
+import { Address } from '../types/address.type';
+
+@Component({
+  selector: 'app-address',
+  templateUrl: './address.component.html',
+  styles: [
+  ]
+})
+export class AddressComponent implements OnInit {
+
+  @Input()
+  address: Address
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+address.component.html
+
+<address>
+    <p>{{address.city}}</p>
+    <p>{{address.state}}</p>
+    <p>{{address.zipcode}}</p>
+</address>
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+                               View ------->Component ---->View
+
+Two way data binding:
+
+  Passing data from View to Component
+  Component to View
+
+  <h1>Getting input from the User and send to method</h1>
+    <h2>{{message}}</h2>
+    <input (input)="onUpdate($event)" />
+    <button (click)="getTextboxValue()">TextboxValue</button>
+</div>
+
+
+export class EventbindingComponent {
+
+  message: string = "default Value"
+  onUpdate(ctrl: any): void {
+    //console.dir(value.target);
+    //console.log(ctrl.target.value)
+    // ctrl.target.value
+    //two way data binding
+    this.message = ctrl.target.value
+  }
+  getTextboxValue(): void {
+      alert(this.message)
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Code Refactoring:
+
+1.without event listener.
+
+    <input (input)="onUpdate($event)" />
+
+    <input (input)="message=$event.target.value"/>
+
+2.Property and event binding
+      
+  <input [value]="message" (input)="message=$event.target.value"/>
+
+
+2.event+property  [(ngModel)] without eventlistenter and event binding itself
+
+ngModel : it is object, used to transfer data : dto object
+        
+<input [(ngModel)]="message">
+
+rc/app/eventbinding/eventbinding.component.html:32:16 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+32         <input [(ngModel)]="message">
+                  ~~~~~~~~~~~~~~~~~~~~~
+
+ngModel is not part of angular core, we need inject one more module - FormsModule
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+Dynamic css:
+
+Property binding and css: dynamic style
+........................................
+
+class="container"
+style="color:red"
+
+ These styles are called static, once it applied cant be changed during rendering.
+
+
+how to change style dynamically or how to apply new style dynamically.
+
+<h1 [style.stylename]="booleancondition ? value1:value2">
+<h2 [class.classname]="booleancondition">  
+ 
+  if booleancondition is true, then style will be applied else wont be applied
+
+
+
+
+<h1 style="text-align: center;"> Styles </h1>
+
+<div [class.active]="isActive">
+    <p>Hello</p>
+</div>
+<button (click)="changeStyle()">Apply Color</button>
+
+
+export class StyleComponent{
+
+  isActive: boolean = false
+  changeStyle() {
+    this.isActive = !this.isActive
+  }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+				Child to Parent Component Communication
+
+Child Component can send data to parent component.
+How to send custom events.
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+                                   Custom Events
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Parent to child Communication
+   via property binding and @Input
+
+Child to Parent Communication:
+
+Child -Parent Communication:
+
+-Via Events : Custom Events:
+
+EventEmitter Object is used to communicate
+
+@Output
+
+We need to write two components
+
+1.Parent Component
+2.Child Component
+
+
+Use case : if child component clicks button, ---Listener is called---Inside Listerner
+ --Write code to send data To parent.
+
+                            Parent <---EventEmitter<---Child
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Steps : write two components
+
+1.parent
+2.child
+
+
+Parent
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  templateUrl: './parent.component.html',
+  styles: [
+  ]
+})
+export class ParentComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+2.Child Component
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  templateUrl: './child.component.html',
+  styles: [
+  ]
+})
+export class ChildComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+Step 2:
+
+ EventEmitter:
+
+Use in components with the @Output directive to emit custom events synchronously or asynchronously, and register handlers for those events by subscribing to an instance.
+
+1.EventEmitter is used to broad cast values to Parent Components
+
+class EventEmitter<T> extends Subject {
+  constructor(isAsync?: boolean): EventEmitter<T>
+  emit(value?: T): void
+  subscribe(next?: (value: T) => void, error?: (error: any) => void, complete?: () => void): Subscription
+}
+
+2.EventEmitter object is Subclass Rxjs Subject.
+
+create EventEmitter Object of type in child compoent.
+
+eventemitter is used to send custom events.
+
+   onSendRequest = new EventEmitter<string>();
+
+3.We have to decorate eventemitter with @Output()
+
+  @Output()
+  onSendRequest = new EventEmitter<string>();
+
+4.send data to Parent Component
+
+    <div>
+        <input [(ngModel)]="message">
+    </div>
+    <div>
+        <button (click)="onSend()">Send To Parent</button>
+    </div>
+
+export class ChildComponent {
+
+  message: string = "Good Value"
+  //event emitter Declaration
+  @Output()
+  onSendRequest = new EventEmitter<string>();
+  onSend() {
+    alert('sending data to parent')
+    //emit data  -  next method in subject
+    this.onSendRequest.emit(this.message)
+  }
+
+}
+
+5.Listens event and grab the data from the Child
+
+<div>
+    <h1 style="text-align: center;">Parent Component</h1>
+    <h2>{{childMessage}}</h2>
+</div>
+<hr/>
+<app-child (onSendRequest)="onReadData($event)" ></app-child>
+
+
+export class ParentComponent {
+
+  childMessage: string;
+
+  onReadData(event: any) {
+    this.childMessage = event
+  }
+
+}
+
+/////////////
+
+final code :
+
+Child:
+<div>
+    <h1 style="text-align: center;">Child Component</h1>
+    <div>
+        <input [(ngModel)]="message">
+    </div>
+    <div>
+        <button (click)="onSend()">Send To Parent</button>
+    </div>
+</div>
+
+
+export class ChildComponent implements OnInit {
+
+  message: string = "Good Value"
+  //event emitter Declaration
+  @Output()
+  onSendRequest = new EventEmitter<string>();
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  onSend() {
+    alert('sending data to parent')
+    //emit data  -  next method in subject
+    this.onSendRequest.emit(this.message)
+  }
+
+}
+
+
+Parent:
+
+<div>
+    <h1 style="text-align: center;">Parent Component</h1>
+    <h2>{{childMessage}}</h2>
+</div>
+<hr/>
+<app-child (onSendRequest)="onReadData($event)" ></app-child>
+
+export class ParentComponent {
+
+  childMessage: string;
+  onReadData(event: any) {
+    this.childMessage = event
+  }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+*ngIf:
+.......
+ how to add if ... else
+
+
+2.*ngIf  : if condition
+
+ add or remove dom element based on boolean condition
+ 
+<div hidden> - true/false - div element will not visible
+
+   <div hidden>       - true you tell hide it  
+
+     <h1>Hello</h1>
+   </div>
+
+in order to implement we have another way using [hidden] attribute
+
+    <div [hidden]="isHidden">
+        <h1>Hai</h1>
+     </div>
+     <button class="btn btn-success" (click)="toogleEnabled()">Toggle:Ifelse</button>
+
+if you are implementing toggling .
+
+ add or remove dom element dynamically.
+
+Caution : dont add or remove elements dynamically which degrades performances.
+
+inside of that use "hidden" attribute
+
+ <!--Show and Hide-->
+
+    <div *ngIf="isHidden">
+        <h1>Hello</h1>
+    </div>
+
+Recommended:
+
+  <div [hidden]="isHidden">
+        <h1>Hai</h1>
+    </div> 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+if ..else 
+
+  <!--if else lader-->
+
+    <div *ngIf="isEnabled; else mycondition">
+        <h1>You have Facility!</h1>
+    </div>
+
+   <ng-template #mycondition>
+      <h1>Sorry! Facility is not availbale</h1>
+   </ng-template>
+
+# : template reference variable
+
+Progress bar:
+............
+   <h2>
+    <div *ngIf="loading; else notLoading  ">
+      <h2>{{status}}</h2>
+    </div>
+  </h2>
+  <ng-template #notLoading>
+    <div>
+      <h2>{{status}}</h2>
+    </div>
+  </ng-template>
+
+
+
+/////////
+
+<div>
+    <h1 style="text-align: center;">If else</h1>
+
+    <button class="btn btn-success" (click)="toggle()">Toggle</button>
+    <!--Show and Hide-->
+    <div *ngIf="isHidden">
+        <h1>Hello</h1>
+    </div>
+    <!-- <div [hidden]="isHidden">
+        <h1>Hai</h1>
+    </div> -->
+
+    <button class="btn btn-success" (click)="toogleEnabled()">Toggle:Ifelse</button>
+   
+    <div *ngIf="isEnabled; else mycondition">
+        <h1>You have Facility!</h1>
+    </div>
+
+    <ng-template #mycondition>
+        <h1>Sorry! Facility is not availbale</h1>
+    </ng-template>
+
+    <h2>
+        <div *ngIf="loading; else notLoading  ">
+          <h2>{{status}}</h2>
+        </div>
+      </h2>
+      <ng-template #notLoading>
+        <div>
+          <h2>{{status}}</h2>
+        </div>
+      </ng-template>
+</div>
+
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-ifelse',
+  templateUrl: './if-else.component.html',
+  styles: [
+  ]
+})
+export class IfElseComponent implements OnInit {
+
+  isHidden: boolean = false
+  isEnabled: boolean = false;
+  loading: boolean = true;
+
+  status: string = 'Loading......'
+
+  constructor() {
+    //Progress bar time: using timer
+    setTimeout(() => {
+      this.loading = !this.loading;
+      this.status = 'Finished'
+    }, 5000)
+  }
+
+  ngOnInit(): void {
+  }
+  toggle() {
+    this.isHidden = !this.isHidden
+  }
+  toogleEnabled() {
+    this.isEnabled = !this.isEnabled;
+  }
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+Switch case:
+
+<div class="container">
+    <h1 style="text-align: center;">Swich case </h1>
+    <input [(ngModel)]="input">
+    <button (click)="showFeedback()">Show Feedback</button>
+
+    <div [ngSwitch]="feedback">
+        <p *ngSwitchCase="'good'">Good</p>
+        <p *ngSwitchCase="'verygood'">Very Good</p>
+        <p *ngSwitchCase="'bad'">Bad</p>
+        <p *ngSwitchDefault>Your input is not matching</p>
+    </div>
+    <div [ngSwitch]="feedback">
+        <ng-template [ngSwitchCase]="'good'">
+            <h3>Good</h3>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'verygood'">
+            <h3>Very Good</h3>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'bad'">
+            <h3>bad</h3>
+        </ng-template>
+        <ng-template ngSwitchDefault>
+            <h3>Your input is not matching</h3>
+        </ng-template>
+    </div>
+
+</div>
+
+export class SwitchcaseComponent implements OnInit {
+
+  feedback: string = "good"
+  input:string ="";
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+  showFeedback() {
+    this.feedback = this.input
+  }
+
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+3.Attribute directive :
+
+ Adding extra behaviour to existing dom elements.
+
+<h1 style class hidden  id name >
+     |
+  built in attributes
+
+can i add custom attributes? yes
+
+<h1 myattribute="value" >
+
+eg:
+<a routerLink="child-a">
+       |
+  attribute directive
+
+<app-root> ----->Comonent
+*ngFor --->NgForDirective
+routerLink ->RouterLinkDirective
+
+
+<button (click)="listener">
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+				 DOM MANIPULATION
+..............................................................................................
+
+
+Access Object , change its values
+
+ h2------Object---->change its value
+
+Using js you change it.
+
+ var element = document.getElementByid('xxx')
+
+
+
+Ways of dom manipulation:
+
+1.via structural directive -*ngFor,*ngIf
+
+2.via $event object.
+
+3.Javascript way
+   access dom element directly like js inside angular via attribute directive.
+
+AttributeDirecive is object through which you can access native dom elements and do dom maniuplation.
+
+1.INSIDE Directive
+  using "ElementRef" -Object
+A wrapper around a native element inside of a View.
+
+this.element.nativeElement.style.backgroundColor = "yellow";
+
+How to use ElementRef object?
+  
+Angular is di framework, you have to grab any object inside another via constructors.
+
+    this.element.nativeElement.style.backgroundColor = 'yellow'
+
+How to add event listeners and events?
+  js way.
+
+////////////////////////////////////////////////////////////////////////////////////
+
+import { Directive, ElementRef, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+
+  constructor(private element: ElementRef) {
+    console.log('directive is applied')
+    console.log(this.element.nativeElement)
+    //setting back ground color
+    this.element.nativeElement.style.backgroundColor = 'yellow'
+  }
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    console.log('entering')
+    this.highLight('yellow')
+  }
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    console.log('leaving')
+    this.highLight(null)
+
+  }
+  private highLight(color: string) {
+    this.element.nativeElement.style.backgroundColor = color
+
+  }
+
+}
+
+inside component:
+<div>
+    <h1 appHighlight >Highlight Me!</h1>
+</div>
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+                                  Template Reference Variable
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Getting DOM Reference inside template itself -Template Reference variable.
+
+DOM Manipulation in angular patterns:
+
+Within comonent/directive code - inside ts code
+1.Via $event Object.
+2.Via Attribute Directive : ElementRef,@HostListener.
+3.Via structural directive
+
+inside template itself:
+
+4.Template Reference Variable : #
+ To access dom objects inside /across templates.
+
+DOM Manipulation in angular patterns:
+
+
+Within comonent/directive code - inside ts code
+1.Via $event Object.
+2.Via Attribute Directive : ElementRef,@HostListener.
+3.Via structural directive
+
+inside template itself:
+
+4.Template Reference Variable : #
+ To access dom objects inside /across templates.
+
+
+<div>
+    <h1 style="text-align: center;">Template Reference</h1>
+
+    <div>
+        <h1>Name : {{firstname}}</h1>
+        <input #name placeholder="Please Enter Your Name">
+
+        <button class="btn btn-success" (click)="setName(name.value)">Get Value From Template</button>
+    </div>
+</div>
+export class TemplatereferenceComponent implements OnInit {
+
+  color:string = 'red'
+  firstname:string ='Default'
+
+  public setName(name:string){
+     this.firstname = name;
+  }
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+                                     Pipes
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is pipe?
+ pipe object used for data formating.
+
+eg:
+ show uppercase
+ show money values - $,#,
+ show date fromates  - 1/10/2021 , feb 10 2021...
+ custom formates
+
+Angular provides lot of built in pipes, you can write your own pipes as well.
+....
+Syntax:
+  some data | nameof the pipe.
+
+
+CommonModule,FormsModule,XXXXModules---->Group into one---->
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+                                     Pipes
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is pipe?
+ pipe object used for data formating.
+
+eg:
+ show uppercase
+ show money values - $,#,
+ show date fromates  - 1/10/2021 , feb 10 2021...
+ custom formates
+
+
+Angular provides lot of built in pipes, you can write your own pipes as well.
+....
+Syntax:
+  some data | nameof the pipe.
+
+
+Builtin pipes:
+
+DatePipe: Formats a date value according to locale rules.
+
+UpperCasePipe: Transforms text to all upper case.
+
+LowerCasePipe: Transforms text to all lower case.
+
+CurrencyPipe: Transforms a number to a currency string, formatted according to locale rules.
+
+DecimalPipe: Transforms a number into a string with a decimal point, formatted according to locale rules.
+
+PercentPipe: Transforms a number to a percentage string, formatted according to locale rules.
+
+asyncPipe : to bind list of values async
+
+
+
+Date Formating:
+
+today:any = new Date();
+
+<h3>Today {{today | date }}</h3>
+
+What if i want to customize date according our need?
+
+ dd/mm/yyy - format
+
+Pipes can take input
+
+ {{expression | pipe:input}}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+UpperCasePipe
+
+{{ value_expression | uppercase }}
+
+<div>
+    <h1 style="text-align: center;">Pipes</h1>
+    <h2>Date Pipe</h2>
+    <h2>Today {{today | date}}</h2>
+    <h2>Today {{today | date:'dd/MM/YY'}}</h2>
+    <h2>Today {{today | date:'medium'}}</h2>
+    <h1>String Pipe</h1>
+    <h2>Name {{name | uppercase}}</h2>    
+    <h2>Name {{name | lowercase}}</h2>
+    <h2>Name {{name | titlecase}}</h2>
+    <h1>Currency Pipe</h1>
+    <p>A: {{a | currency}}</p>
+
+    <p>A: {{a | currency:'INR'}}</p>
+
+    <!--output 'CA$0.26'-->
+    <p>A: {{a | currency:'CAD'}}</p>
+
+    <!--output 'CAD0.26'-->
+    <p>A: {{a | currency:'CAD':'code'}}</p>
+
+    <!--output 'CA$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2'}}</p>
+
+    <!--output '$0,001.35'-->
+    <p>B: {{b | currency:'CAD':'symbol-narrow':'4.2-2'}}</p>
+
+    <!--output '0 001,35 CA$'-->
+    <p>B: {{b | currency:'CAD':'symbol':'4.2-2':'fr'}}</p>
+
+    <!--output 'CLP1' because CLP has no cents-->
+    <p>B: {{b | currency:'CLP'}}</p>
+
+</div>
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Custom Pipes
+............
+
+Step 1:
+
+declare pipe class
+import { Pipe, PipeTransform } from "@angular/core";
+
+
+
+@Pipe({
+    name: 'decimalFraction'
+})
+export class DecimalFractionPipe implements PipeTransform {
+    transform(value: number, digit: number = 2) {
+        console.log('decimal fraction')
+        //10.789445454  => 10.79
+        return value.toFixed(digit)
+    }
+}
+
+@NgModule({
+  declarations : [DecimalFractionPipe],
+  imports : [BrowserModule ,FormsModule],
+  providers: [],
+  ///entry point
+  bootstrap: [AppComponent]
+
+})
+export class AppModule{}
+
+<h1>Custom Pipe</h1>
+     <p>Fraction Pipe Value :  {{100.8978999 | decimalFraction:1}}</p>
+
+
+Think : you have list of products , want to display products based on price - low -high
+high-low.
+/////////////////////////////////////////////////////////////////////////////////////////////
+                               Modularation 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Application Modularity:
+
+1.folders and files based modularity
+   into folders
+   into files  -es 6 moduarity.
+
+2.logical modularity
+
+3.lib based modularity
+
+
+2.logical modularity:
+
+  -This is angular modularity
+  -Object organization.
+
+Objects classified into two category
+
+ -container objects
+     which contains other objects
+    container objects are represented by modules decorated with @NgModule
+  Types of container
+     - main container - AppModule -  Application container
+     - sub containers  -Grouped modules - subModules decorated with @NgModule
+
+ -features objects
+   component,directives,pipes,utitlies,Services
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Scope: Encapsulation
+  Visibility of objects
+
+Types of scope
+-within module
+-across the app
+
+Submodules:
+
+ Angular provides lot of built in submodules
+
+BrowserModule
+FormsModule
+
+how to create custom submodule.
+
+Step 1:
+app/greeter
+
+greeter.module.ts
+
+import { NgModule } from "@angular/core";
+
+@NgModule({
+    declarations: [],
+    imports: [],
+    providers: []
+})
+export class GreeterModule { }
+
+app/app.module.ts
+
+import { GreeterModule } from './greeter/greeter.module';
+@NgModule({
+   imports: [
+    BrowserModule ,GreeterModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+Steps Creating component inside GreeterModule:
+
+C:\session\HrBlock\ng-modularity>ng g c greeter/hello  --module greeter   --inline-style true --skip-tests true --flat true
+CREATE src/app/greeter/hello.component.html (20 bytes)
+CREATE src/app/greeter/hello.component.ts (248 bytes)
+UPDATE src/app/greeter/greeter.module.ts (226 bytes)
+
+
+import { NgModule } from "@angular/core";
+import { HelloComponent } from './hello.component';
+
+@NgModule({
+    declarations: [
+        HelloComponent
+    ],
+    imports: [],
+    providers: []
+})
+export class GreeterModule { }
+
+
+Try to access inside app.component.html
+
+<div class="container">
+  <h1 style="text-align: center;">Modularity</h1>
+  <app-hello></app-hello>
+</div>
+
+Output
+
+src/app/app.component.html:3:3 - error NG8001: 'app-hello' is not a known element:
+1. If 'app-hello' is an Angular component, then verify that it is part of this module.
+2. If 'app-hello' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+3   <app-hello></app-hello>
+    ~~~~~~~~~~~
+
+  src/app/app.component.ts:5:16
+    5   templateUrl: './app.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AppComponent.
+
+
+app-hello is part of greeter module , we are refering outside that module.
+
+Note:
+
+ - any object defined within that module, will be visible with in that module only.
+   which is not visible outside that module inculding appmodule.
+
+
+How to refer outside?
+
+ We have to share it . via configuration : exports
+
+import { NgModule } from "@angular/core";
+import { HelloComponent } from './hello.component';
+
+@NgModule({
+    declarations: [
+        HelloComponent
+    ],
+    imports: [],
+    exports: [HelloComponent],
+    providers: []
+})
+export class GreeterModule { }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Via Cli:
+C:\session\HrBlock\ng-modularity>ng g module greeter --module=app
+CREATE src/app/greeter/greeter.module.ts (193 bytes)
+UPDATE src/app/app.module.ts (390 bytes)
+
+C:\session\HrBlock\ng-modularity>ng g c greeter/hello  --module greeter   --inline-style true --skip-tests true --flat true --export true
+CREATE src/app/greeter/hello.component.html (20 bytes)
+CREATE src/app/greeter/hello.component.ts (248 bytes)
+UPDATE src/app/greeter/greeter.module.ts (265 bytes)
+
+
+CommonModule:
+.............
+Exports all the basic Angular directives and pipes, such as NgIf, NgForOf, DecimalPipe, and so on. Re-exported by BrowserModule, which is included automatically in the root AppModule when you create a new app with the CLI new command.
+
+BrowserModule
+.............
+
+Exports required infrastructure for all Angular apps. Included by default in all Angular apps created with the CLI new command. Re-exports CommonModule and ApplicationModule, making their exports and providers available to all apps.
+
+
+
+BrowserModule vs CommonModule:
+
+BrowserModule is having all builtin directives(*ngIF...),Pipes(uppercase...) and extra browser
+functiality. It is required module to run angular apps.
+It has been injected inside appmodule, as per scope concept, BrowserModule will be not visible outside appmodule.
+
+What if i want to use builtin things, angular provides CommonModule is having all builtin directives(*ngIF...),Pipes(uppercase...)  except browser features.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+                                   Module Refactoring
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+what if application grows rapidly 
+
+ greeter
+ users
+ products
+
+we need to inject all modules inside app module..
+
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { GreeterModule } from './greeter/greeter.module';
+import { UsersModule } from './users/users.module';
+import { ProductsModule } from './products/products.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    GreeterModule,
+    UsersModule,
+    ProductsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+Injecting all domain modules into app.module is not good practice , we have to create
+module called  "shared Module" , that module you can inject to app module.
+
+
+Demo:
+
+Create folder
+
+app/domainmodules/app.domain.shared.module.ts
+
+import { NgModule } from "@angular/core";
+import { GreeterModule } from "../greeter/greeter.module";
+import { ProductsModule } from "../products/products.module";
+import { UsersModule } from "../users/users.module";
+
+
+
+@NgModule({
+    imports: [GreeterModule, UsersModule, ProductsModule]
+})
+export class AppDomainSharedModule {
+
+}
+
+app.module
+
+import { AppDomainSharedModule } from './domainmodules/app.domain.shared.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppDomainSharedModule
+    // GreeterModule,
+    // UsersModule,
+    // ProductsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+src/app/app.component.html:3:3 - error NG8001: 'app-hello' is not a known element:
+1. If 'app-hello' is an Angular component, then verify that it is part of this module.
+2. If 'app-hello' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+Soution: exports module itself
+
+@NgModule({
+    imports: [GreeterModule, UsersModule, ProductsModule],
+    exports: [GreeterModule, UsersModule, ProductsModule]
+})
+export class AppDomainSharedModule {
+
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+                             Global Sharing
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Some features need to shared across application.
+
+Features:
+
+1.pipes
+2.directives
+3.services
+4.commonModule
+5.FormsModule
+
+what if i want reuse theses features across application, we dont need to inject  every component.
+
+we can create shared module.
+
+
+shared.module.ts
+
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+
+
+
+@NgModule({
+    imports: [CommonModule, FormsModule],
+    exports: [CommonModule, FormsModule]
+})
+export class SharedModule { }
+
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared.module';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    // CommonModule,FormsModule
+    SharedModule
+  ],
+  exports: [
+    HelloComponent
+  ]
+})
+export class GreeterModule { }
+
+ 
+//Shared module
+
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HighlightDirective } from "./directives/highlight.directive";
+import { DecimalFractionPipe } from "./pipes/decimalfraction.pipe";
+
+
+@NgModule({
+    declarations: [DecimalFractionPipe, HighlightDirective],
+    imports: [CommonModule, FormsModule],
+    exports: [CommonModule, FormsModule, DecimalFractionPipe, HighlightDirective]
+})
+export class SharedModule { }
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+component life cycle methods:
+
+constructor - used only for di purpose not for data initalization.
+
+init - for component data initalization - api code,timer,websocket
+destroy
+
+
+Flow:
+
+ constructor ----ngOnChanges()----ngOnInit()---------------------ngOnDestroy()
+
+
+async apis in js
+
+1.timers
+2.ajax
+3.websockets
+etc....
+/////////////////////////////////////////////////////////////////////////////////////////////
+                                 Services
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Service is object going to hold biz logic and data.
+
+In Mvc , service is acting as bridge between UI and back end
+
+
+ View --------------Controller---------Service-----backend
+
+ View-----------------Component---------Service-----Backend.
+
+How to create service
+
+
+1.declare a class and decorate with @Injectable.
+
+2.How to grab service inside another service or component/directive
+
+  -create object : provider  - di
+  -Get Object : inside constructor.
+////////////////////////////////////////////////////////////////////////////////////////////
+  
+Component Design:
+
+-Component must not have data, which should be coming from services.
+
+
+Component Data can be classified into two category
+
+-biz /domain data  -  products,users,todos.......
+-ui data /ui state -  like enable/disable,show/hide,loading,on/off.
+
+Rule :
+
+  Keep all domain data inside services
+  Ui state data should be kept inside component itself
+
+
+steps:
+
+
+import { Injectable } from "@angular/core";
+@Injectable()
+export class HelloService{
+
+}
+
+di:
+ scope : if you inject the service inside that module, will be availble inside that module only - module specific service
+
+create Service Object
+
+provider:[HelloService]
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { HelloService } from './greeter.service';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+
+Step 2: Dependency Injection
+
+export class HelloComponent {
+  //domain data
+  message: string;
+  //di
+  constructor(private helloService: HelloService) { }
+
+}
+
+Step 3: define biz method
+
+import { Injectable } from "@angular/core";
+
+@Injectable()
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello';
+    }
+}
+
+Step 4: call the method and initialze the state.
+
+import { Component, OnInit } from '@angular/core';
+import { HelloService } from './greeter.service';
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent {
+  //domain data
+  message: string;
+
+  constructor(private helloService: HelloService) {
+    this.message = this.helloService.sayHello();
+  }
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Scope of the Service:
+
+ if you inject the service inside any module using providers:[],will be visible across application.
+
+app.module:
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    GreeterModule,
+    UserModule
+  ],
+  providers: [HelloService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+greeter.module.ts
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+                                 Code Refactoring: provider related:
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Create Object Spec; DI:
+
+provider:[HelloService]
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { HelloService } from './greeter.service';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+Without Provider instruction inside module rather we can metion "inline" in the service itself. which is recommened.
+
+
+import { Injectable } from "@angular/core";
+
+@Injectable({
+   //this service should be created by global/application injector
+    providedIn: 'root'
+})
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello From Service';
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Types of Services:
+
+1.sync service
+2.async service.
+
+
+1.sync service:
+
+ A component/view is blocked for data.
+
+import { Injectable } from "@angular/core";
+
+@Injectable({
+   //this service should be created by global/application injector
+    providedIn: 'root'
+})
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello From Service';
+    }
+}
+
+2.Async services:
+................
+
+1.callback pattern
+2.promise patterns
+3.Rx -Observable pattern
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+View /UI and Data:
+
+1.Data will be display when page loads - inital ui rendering
+2.New data will be displayed once user interacts - search,submit...
+
+inside component where should i write code to initalize the data : inital ui.
+
+-constructors
+   called during object creation.
+   to initalize the data.
+
+only for grabbing object.
+
+Angular does not recommend to initalize the data inside constructor rather we have to use component life cycle methods
+
+Component Life Cycle Methods: hooks:
+   methods are called by angular runtime when component/directive goes in transistion.
+
+init and destory hook:
+......................
+
+init - called after constructor completes, where you can write resource insentive tasks
+  like api calls,timers,websocket integration.
+
+destory -called once if the component is removed from memory or from component tree
+   -cleanup activities.
+
+init and destroy is represented inside life cyle hooks interfaces
+
+OnInit interface
+ ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent implements OnInit {
+  //domain data
+  message: string = "default";
+
+  constructor(private helloService: HelloService) {
+    //this.message = this.helloService.sayHello();
+    // this.helloService.sayHello(response => {
+    //   this.message = response
+    // });
+  }
+  ngOnInit(): void {
+    this.helloService.sayHello(response => {
+      this.message = response
+    });
+  }
+
+}
+
+Refactoring without implementing interface itself, angular will take care of that.
+
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent {
+  //domain data
+  message: string = "default";
+
+  constructor(private helloService: HelloService) {
+    //this.message = this.helloService.sayHello();
+    // this.helloService.sayHello(response => {
+    //   this.message = response
+    // });
+  }
+  ngOnInit(): void {
+    this.helloService.sayHello(response => {
+      this.message = response
+    });
+  }
+  ngOnDestroy(){
+      //cleanup logic
+  }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Angular and Rx js:
+
+->Most of the Angular apis written based on rx js.
+->Angular rxified the exising rxjs
+->Angular adds one level abstraction on rxjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

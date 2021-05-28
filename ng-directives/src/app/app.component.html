@@ -1,0 +1,80 @@
+<div class="container">
+  <h1>Directives</h1>
+  <!-- <h1 style="text-align: center">For loop</h1>
+  <ul>
+    <li *ngFor="let num of numList">{{ num }}</li>
+  </ul> -->
+  <!-- <h1>Todos</h1>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let todo of todos">
+        <span class="badge badge-primary badge-pill"> {{todo.id}} </span> {{todo.title}}
+    </li>
+</ul>
+<div class="card" *ngFor="let todo of todos">
+  <h5 class="card-header">{{todo.id}}</h5>
+  <div class="card-body">
+      <h5 class="card-title">{{todo.userId}}</h5>
+      <p class="card-text">{{todo.title}}</p>
+      <a href="#" class="btn btn-primary">Update</a>
+  </div>
+</div> -->
+  <!-- <h1>If Condition</h1> -->
+
+  <!-- <div *ngIf="isHidden">
+    <h1>Hello</h1>
+  </div> -->
+  <!-- <div [hidden]="isHidden">
+    <h1>Hai</h1>
+  </div>
+  <div>
+    <button class="btn btn-success" (click)="toogleEnabled()">Toggle</button>
+  </div>
+  <h1>If .. else</h1>
+  <div *ngIf="isEnabled; else mycondition">
+    <h1>You have Facility!</h1>
+  </div>
+  <ng-template #mycondition>
+    <h1>Sorry! Facility is not availbale</h1>
+  </ng-template>
+  <button class="btn btn-success" (click)="showFacility()">Ifelse</button>
+
+  <h2>
+    <div *ngIf="loading; else notLoading">
+      <h2>{{ status }}</h2>
+    </div>
+  </h2>
+  <ng-template #notLoading>
+    <div>
+      <h2>{{ loaderMessage }}</h2>
+    </div>
+  </ng-template> -->
+  <!-- <h1>Switch case</h1>
+  <h1 style="text-align: center;">Swich case </h1>
+  <input [(ngModel)]="input">
+  <button (click)="showFeedback()">Show Feedback</button>
+
+  <div [ngSwitch]="feedback">
+      <p *ngSwitchCase="'good'">Good</p>
+      <p *ngSwitchCase="'verygood'">Very Good</p>
+      <p *ngSwitchCase="'bad'">Bad</p>
+      <p *ngSwitchDefault>Your input is not matching</p>
+  </div>
+  <div [ngSwitch]="feedback">
+    <ng-template [ngSwitchCase]="'good'">
+        <h3>Good</h3>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'verygood'">
+        <h3>Very Good</h3>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'bad'">
+        <h3>bad</h3>
+    </ng-template>
+    <ng-template ngSwitchDefault>
+        <h3>Your input is not matching</h3>
+    </ng-template> -->
+<!-- </div> -->
+
+<!-- <h1 appHighlight >Highlight Directive</h1>
+<p appHighlight >This is para</p> -->
+<app-template-reference></app-template-reference>
+</div>
