@@ -2441,6 +2441,363 @@ import { DecimalFractionPipe } from "./pipes/decimalfraction.pipe";
     exports: [CommonModule, FormsModule, DecimalFractionPipe, HighlightDirective]
 })
 export class SharedModule { }
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+component life cycle methods:
+
+constructor - used only for di purpose not for data initalization.
+
+init - for component data initalization - api code,timer,websocket
+destroy
+
+
+Flow:
+
+ constructor ----ngOnChanges()----ngOnInit()---------------------ngOnDestroy()
+
+
+async apis in js
+
+1.timers
+2.ajax
+3.websockets
+etc....
+/////////////////////////////////////////////////////////////////////////////////////////////
+                                 Services
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Service is object going to hold biz logic and data.
+
+In Mvc , service is acting as bridge between UI and back end
+
+
+ View --------------Controller---------Service-----backend
+
+ View-----------------Component---------Service-----Backend.
+
+How to create service
+
+
+1.declare a class and decorate with @Injectable.
+
+2.How to grab service inside another service or component/directive
+
+  -create object : provider  - di
+  -Get Object : inside constructor.
+////////////////////////////////////////////////////////////////////////////////////////////
+  
+Component Design:
+
+-Component must not have data, which should be coming from services.
+
+
+Component Data can be classified into two category
+
+-biz /domain data  -  products,users,todos.......
+-ui data /ui state -  like enable/disable,show/hide,loading,on/off.
+
+Rule :
+
+  Keep all domain data inside services
+  Ui state data should be kept inside component itself
+
+
+steps:
+
+
+import { Injectable } from "@angular/core";
+@Injectable()
+export class HelloService{
+
+}
+
+di:
+ scope : if you inject the service inside that module, will be availble inside that module only - module specific service
+
+create Service Object
+
+provider:[HelloService]
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { HelloService } from './greeter.service';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+
+Step 2: Dependency Injection
+
+export class HelloComponent {
+  //domain data
+  message: string;
+  //di
+  constructor(private helloService: HelloService) { }
+
+}
+
+Step 3: define biz method
+
+import { Injectable } from "@angular/core";
+
+@Injectable()
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello';
+    }
+}
+
+Step 4: call the method and initialze the state.
+
+import { Component, OnInit } from '@angular/core';
+import { HelloService } from './greeter.service';
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent {
+  //domain data
+  message: string;
+
+  constructor(private helloService: HelloService) {
+    this.message = this.helloService.sayHello();
+  }
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Scope of the Service:
+
+ if you inject the service inside any module using providers:[],will be visible across application.
+
+app.module:
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    GreeterModule,
+    UserModule
+  ],
+  providers: [HelloService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+greeter.module.ts
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+                                 Code Refactoring: provider related:
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Create Object Spec; DI:
+
+provider:[HelloService]
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HelloComponent } from './hello.component';
+import { HelloService } from './greeter.service';
+
+@NgModule({
+  declarations: [
+    HelloComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  providers: [HelloService],
+  exports: [HelloComponent]
+})
+export class GreeterModule { }
+
+Without Provider instruction inside module rather we can metion "inline" in the service itself. which is recommened.
+
+
+import { Injectable } from "@angular/core";
+
+@Injectable({
+   //this service should be created by global/application injector
+    providedIn: 'root'
+})
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello From Service';
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Types of Services:
+
+1.sync service
+2.async service.
+
+
+1.sync service:
+
+ A component/view is blocked for data.
+
+import { Injectable } from "@angular/core";
+
+@Injectable({
+   //this service should be created by global/application injector
+    providedIn: 'root'
+})
+export class HelloService {
+    constructor() { }
+    //biz api - methods
+    public sayHello(): string {
+        return 'Hello From Service';
+    }
+}
+
+2.Async services:
+................
+
+1.callback pattern
+2.promise patterns
+3.Rx -Observable pattern
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+View /UI and Data:
+
+1.Data will be display when page loads - inital ui rendering
+2.New data will be displayed once user interacts - search,submit...
+
+inside component where should i write code to initalize the data : inital ui.
+
+-constructors
+   called during object creation.
+   to initalize the data.
+
+only for grabbing object.
+
+Angular does not recommend to initalize the data inside constructor rather we have to use component life cycle methods
+
+Component Life Cycle Methods: hooks:
+   methods are called by angular runtime when component/directive goes in transistion.
+
+init and destory hook:
+......................
+
+init - called after constructor completes, where you can write resource insentive tasks
+  like api calls,timers,websocket integration.
+
+destory -called once if the component is removed from memory or from component tree
+   -cleanup activities.
+
+init and destroy is represented inside life cyle hooks interfaces
+
+OnInit interface
+ ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent implements OnInit {
+  //domain data
+  message: string = "default";
+
+  constructor(private helloService: HelloService) {
+    //this.message = this.helloService.sayHello();
+    // this.helloService.sayHello(response => {
+    //   this.message = response
+    // });
+  }
+  ngOnInit(): void {
+    this.helloService.sayHello(response => {
+      this.message = response
+    });
+  }
+
+}
+
+Refactoring without implementing interface itself, angular will take care of that.
+
+
+@Component({
+  selector: 'app-hello',
+  templateUrl: './hello.component.html',
+  styles: [
+  ]
+})
+export class HelloComponent {
+  //domain data
+  message: string = "default";
+
+  constructor(private helloService: HelloService) {
+    //this.message = this.helloService.sayHello();
+    // this.helloService.sayHello(response => {
+    //   this.message = response
+    // });
+  }
+  ngOnInit(): void {
+    this.helloService.sayHello(response => {
+      this.message = response
+    });
+  }
+  ngOnDestroy(){
+      //cleanup logic
+  }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Angular and Rx js:
+
+->Most of the Angular apis written based on rx js.
+->Angular rxified the exising rxjs
+->Angular adds one level abstraction on rxjs
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
